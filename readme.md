@@ -66,7 +66,6 @@
 ```
 ## 📊 Database ERD (Entity-Relationship Diagram)
 
-```mermaid
 erDiagram
     Users {
         int id PK
@@ -250,7 +249,6 @@ erDiagram
     Courses ||--o{ Roadmap_Steps : part_of
     Chat_Groups ||--o{ Group_Members : has
     Chat_Groups ||--o{ Messages : contains
-
 ## 📁 Repository Structure
 
 ```text
