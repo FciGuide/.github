@@ -73,14 +73,14 @@ erDiagram
         string full_name
         string email
         string password_hash
-        enum role "student, doctor, admin"
+        string role
         timestamp created_at
     }
 
     Students {
         int user_id PK, FK
         int department_id FK
-        int year_level "1, 2, 3, 4"
+        int year_level
         float gpa
     }
 
@@ -98,23 +98,23 @@ erDiagram
 
     Departments {
         int id PK
-        string name "CS, IT, IS, AI"
+        string name
         text description
     }
 
     Courses {
         int id PK
-        string code "e.g., CS101"
+        string code
         string name
         int credit_hours
         int year_level
-        int semester "1 or 2"
+        int semester
         int department_id FK
     }
 
     Roadmaps {
         int id PK
-        string title "e.g., AI Track"
+        string title
         int department_id FK
     }
 
@@ -130,17 +130,17 @@ erDiagram
         int course_id FK
         string title
         string file_url
-        string file_type "PDF, Video, Summary"
+        string file_type
         int uploaded_by FK
         timestamp created_at
     }
 
     Halls {
         int id PK
-        string hall_name "e.g., Hall 301"
+        string hall_name
         string building
         int floor
-        json coordinates_3d
+        string coordinates_3d
     }
 
     Timetables {
@@ -148,9 +148,9 @@ erDiagram
         int course_id FK
         int hall_id FK
         int doctor_id FK
-        string day_of_week "Sunday, Monday..."
-        time start_time
-        time end_time
+        string day_of_week
+        string start_time
+        string end_time
         int year_level
     }
 
@@ -167,10 +167,10 @@ erDiagram
         int id PK
         int course_id FK
         text question_text
-        json options
+        string options
         string correct_answer
         text explanation
-        string difficulty "Easy, Medium, Hard"
+        string difficulty
     }
 
     Exams {
@@ -199,14 +199,14 @@ erDiagram
         string title
         text content
         int author_id FK
-        int target_year_level "Null if all"
+        int target_year_level
         timestamp created_at
     }
 
     Chat_Groups {
         int id PK
         string name
-        int course_id FK "Null if general"
+        int course_id FK
     }
 
     Group_Members {
@@ -250,7 +250,6 @@ erDiagram
     Courses ||--o{ Roadmap_Steps : part_of
     Chat_Groups ||--o{ Group_Members : has
     Chat_Groups ||--o{ Messages : contains
----
 
 ## 📁 Repository Structure
 
