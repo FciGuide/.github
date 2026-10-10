@@ -64,7 +64,9 @@
 |   Users, Schedule   |                    |    3D Assets Hub)  |
 +---------------------+                    +---------------------+
 ```
-![ERD Diagram](./erd.svg)
+<p align="center">
+  <img src="./assets/fci_guide_erd.svg" alt="FCI Guide ERD" width=100%>
+</p>
 ## 📁 Repository Structure
 
 ```text
