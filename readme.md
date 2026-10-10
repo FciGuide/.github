@@ -147,7 +147,8 @@ npx expo start
 ## 👨‍💻 Contributors
 
 * **Mohamed Ellakany** - Full-Stack Developer
-
+* **Abdalrahman Sharaf** - Full-Stack Developer
+* **Ola Ahmed** - Ai Engineer
 ---
 
 ## 📄 License
