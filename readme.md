@@ -64,7 +64,192 @@
 |   Users, Schedule   |                    |    3D Assets Hub)  |
 +---------------------+                    +---------------------+
 ```
+## 📊 Database ERD (Entity-Relationship Diagram)
 
+```mermaid
+erDiagram
+    Users {
+        int id PK
+        string full_name
+        string email
+        string password_hash
+        enum role "student, doctor, admin"
+        timestamp created_at
+    }
+
+    Students {
+        int user_id PK, FK
+        int department_id FK
+        int year_level "1, 2, 3, 4"
+        float gpa
+    }
+
+    Doctors {
+        int user_id PK, FK
+        int department_id FK
+        string office_number
+        text bio
+    }
+
+    Admins {
+        int user_id PK, FK
+        string permissions_level
+    }
+
+    Departments {
+        int id PK
+        string name "CS, IT, IS, AI"
+        text description
+    }
+
+    Courses {
+        int id PK
+        string code "e.g., CS101"
+        string name
+        int credit_hours
+        int year_level
+        int semester "1 or 2"
+        int department_id FK
+    }
+
+    Roadmaps {
+        int id PK
+        string title "e.g., AI Track"
+        int department_id FK
+    }
+
+    Roadmap_Steps {
+        int id PK
+        int roadmap_id FK
+        int course_id FK
+        int step_order
+    }
+
+    Materials {
+        int id PK
+        int course_id FK
+        string title
+        string file_url
+        string file_type "PDF, Video, Summary"
+        int uploaded_by FK
+        timestamp created_at
+    }
+
+    Halls {
+        int id PK
+        string hall_name "e.g., Hall 301"
+        string building
+        int floor
+        json coordinates_3d
+    }
+
+    Timetables {
+        int id PK
+        int course_id FK
+        int hall_id FK
+        int doctor_id FK
+        string day_of_week "Sunday, Monday..."
+        time start_time
+        time end_time
+        int year_level
+    }
+
+    Live_Lectures {
+        int id PK
+        int timetable_id FK
+        int hall_id FK
+        boolean is_active
+        string current_topic
+        timestamp updated_at
+    }
+
+    Question_Bank {
+        int id PK
+        int course_id FK
+        text question_text
+        json options
+        string correct_answer
+        text explanation
+        string difficulty "Easy, Medium, Hard"
+    }
+
+    Exams {
+        int id PK
+        int course_id FK
+        string title
+        int duration_minutes
+        int created_by FK
+    }
+
+    Exam_Questions {
+        int exam_id PK, FK
+        int question_id PK, FK
+    }
+
+    Exam_Attempts {
+        int id PK
+        int exam_id FK
+        int student_id FK
+        float score
+        timestamp submitted_at
+    }
+
+    Announcements {
+        int id PK
+        string title
+        text content
+        int author_id FK
+        int target_year_level "Null if all"
+        timestamp created_at
+    }
+
+    Chat_Groups {
+        int id PK
+        string name
+        int course_id FK "Null if general"
+    }
+
+    Group_Members {
+        int group_id PK, FK
+        int user_id PK, FK
+        timestamp joined_at
+    }
+
+    Messages {
+        int id PK
+        int group_id FK
+        int sender_id FK
+        text message_text
+        timestamp sent_at
+    }
+
+    Users ||--o| Students : "is a"
+    Users ||--o| Doctors : "is a"
+    Users ||--o| Admins : "is a"
+    Departments ||--o{ Students : belongs_to
+    Departments ||--o{ Doctors : belongs_to
+    Departments ||--o{ Courses : contains
+    Departments ||--o{ Roadmaps : offers
+    Courses ||--o{ Materials : has
+    Courses ||--o{ Timetables : scheduled_in
+    Courses ||--o{ Question_Bank : contains
+    Courses ||--o{ Exams : has
+    Courses ||--o{ Chat_Groups : relates_to
+    Students ||--o{ Materials : uploads
+    Doctors ||--o{ Timetables : teaches
+    Users ||--o{ Announcements : publishes
+    Students ||--o{ Exam_Attempts : takes
+    Users ||--o{ Group_Members : joins
+    Users ||--o{ Messages : sends
+    Halls ||--o{ Timetables : hosts
+    Halls ||--o{ Live_Lectures : hosts
+    Timetables ||--o{ Live_Lectures : triggers
+    Exams ||--o{ Exam_Questions : includes
+    Question_Bank ||--o{ Exam_Questions : belongs_to
+    Roadmaps ||--o{ Roadmap_Steps : includes
+    Courses ||--o{ Roadmap_Steps : part_of
+    Chat_Groups ||--o{ Group_Members : has
+    Chat_Groups ||--o{ Messages : contains
 ---
 
 ## 📁 Repository Structure
